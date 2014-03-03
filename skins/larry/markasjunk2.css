@@ -13,13 +13,15 @@
 #messagetoolbar a.markasjunk2,
 #messagetoolbar a.markasjunk2Sel
 {
-  background-position: center -14px;
+	background-position-x: -2px;
+	background-position-y: -12px;
 }
 
 #messagetoolbar a.markasnotjunk2,
 #messagetoolbar a.markasnotjunk2Sel
 {
-  background-position: center -61px;
+	background-position-x: -2px;
+	background-position-y: -12px;
 }
 
 #rcmContextMenu .markasjunk2 a span,

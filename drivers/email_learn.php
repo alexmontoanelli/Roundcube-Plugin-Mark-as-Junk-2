@@ -20,19 +20,23 @@ class markasjunk2_email_learn
 
 	private function _do_emaillearn($uids, $spam)
 	{
-		$rcmail = rcube::get_instance();
+		write_log("mark2", "iiniciando mail_lear");
+
+		$rcmail = rcmail::get_instance();
 		$identity_arr = $rcmail->user->get_identity();
 		$from = $identity_arr['email'];
 
 		if ($spam)
-			$mailto = $rcmail->config->get('markasjunk2_email_spam');
+			$mailto = "asspspam@%d";
 		else
-			$mailto = $rcmail->config->get('markasjunk2_email_ham');
+			$mailto = "asspnotspam@%d";
 
 		$mailto = str_replace('%u', $_SESSION['username'], $mailto);
 		$mailto = str_replace('%l', $rcmail->user->get_username('local'), $mailto);
 		$mailto = str_replace('%d', $rcmail->user->get_username('domain'), $mailto);
 		$mailto = str_replace('%i', $from, $mailto);
+
+		write_log('mark2', $mailto);
 
 		if (!$mailto)
 			return;
@@ -169,7 +173,7 @@ class markasjunk2_email_learn
 				}
 			}
 
-			$rcmail->deliver_message($MAIL_MIME, $from, $mailto, $smtp_error, $body_file);
+			rcmail_deliver_message($MAIL_MIME, $from, $mailto, $smtp_error);
 
 			// clean up
 			if (file_exists($tmpPath))
