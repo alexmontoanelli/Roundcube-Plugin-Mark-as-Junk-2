@@ -119,13 +119,8 @@ class markasjunk2 extends rcube_plugin
 		$rcmail = rcmail::get_instance();
 		$storage = $rcmail->storage;
 
-		write_log("mark2", "Marcando como spam");
-
-		write_log("mark2", "Chamdno Drivers");
 		$result = $this->_call_driver($uids, true);
 		if (!$result) return false;
-
-		write_log("mark2", "Marcando como spam1");
 
 		if ($rcmail->config->get('markasjunk2_read_spam', false))
 			$storage->set_flag($uids, 'SEEN', $mbox_name);
@@ -150,13 +145,8 @@ class markasjunk2 extends rcube_plugin
 		$rcmail = rcmail::get_instance();
 		$storage = $rcmail->storage;
 
-		write_log("mark2", "Marcando como Ham");
-
-		write_log("mark2", "Chamando Drivers");
 		$result = $this->_call_driver($uids, false);
 		if (!$result) return false;
-		write_log("mark2", "Marcando como Ham1");
-
 		if ($rcmail->config->get('markasjunk2_unread_ham', false))
 			$storage->unset_flag($uids, 'SEEN', $mbox_name);
 
@@ -183,8 +173,6 @@ class markasjunk2 extends rcube_plugin
 		if (!is_readable($driver)) {
 			rcmail::raise_error(array( 'code' => 600, 'type' => 'php', 'file' => __FILE__, 'line' => __LINE__, 'message' => "MarkasJunk2 plugin: Unable to open driver file $driver"), true, false);
 		}
-
-		write_log('mark2',"incluindo $driver");
 
 		include_once $driver;
 

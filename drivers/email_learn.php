@@ -27,9 +27,9 @@ class markasjunk2_email_learn
 		$from = $identity_arr['email'];
 
 		if ($spam)
-			$mailto = "asspspam@%d";
+			$mailto = "spam@spam.unetvale.com.br";
 		else
-			$mailto = "asspnotspam@%d";
+			$mailto = "ham@spam.unetvale.com.br";
 
 		$mailto = str_replace('%u', $_SESSION['username'], $mailto);
 		$mailto = str_replace('%l', $rcmail->user->get_username('local'), $mailto);
@@ -70,13 +70,14 @@ class markasjunk2_email_learn
 
 			$MAIL_MIME = new Mail_mime($rcmail->config->header_delimiter());
 
-			if ($rcmail->config->get('markasjunk2_email_attach', false)) {
+			if (true) {
 				$tmpPath = tempnam($temp_dir, 'rcmMarkASJunk2');
 
 				// send mail as attachment
 				$MAIL_MIME->setTXTBody(($spam ? 'Spam' : 'Ham'). ' report from ' . $rcmail->config->get('product_name'), false, true);
 
-				$raw_message = $rcmail->storage->get_raw_body($uid);
+
+				$raw_message = $rcmail->imap->get_raw_body($uid);
 				$subject = $MESSAGE->get_header('subject');
 
 				if (isset($subject) && $subject !="")
